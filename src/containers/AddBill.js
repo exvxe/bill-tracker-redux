@@ -5,22 +5,41 @@ import '../styles/addBill.styl';
 
 import CategoriesList from '../components/CategoriesList';
 
+import { addBill } from '../actions/billActions'
+
 class AddBill extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: '',
+            amount: '',
+            category: '0'
+        };
+    }
     handleChange = (e) => {
+        const target = event.target;
+        const value = target.value;
+        const name = target.id;
+        this.setState({
+            [name]: value
+        });
     }
     handleSubmit = (e) => {
         e.preventDefault();
+        let {title, amount, category} = this.state
+        let id = this.props.lastID + 1
+        this.props.addBill(id, title, amount, category)
     }
     render() {
         return (
-            <div className="addNote">
+            <div className="addBill">
                 <form onSubmit={this.handleSubmit}>
                     <label htmlFor="title">Title</label>
                     <input type="text" id="title" onChange={this.handleChange}/>
-                    <label htmlFor="value">Value:</label>
-                    <input type="text" id="value" onChange={this.handleChange}/>
+                    <label htmlFor="amount">Value:</label>
+                    <input type="number" step="0.01" id="amount" onChange={this.handleChange}/>
                     <label htmlFor="category">Category:</label>
-                    <CategoriesList categories={this.props.categories}/>
+                    <CategoriesList categories={this.props.categories} changeHandler={this.handleChange}/>
                     <button>Submit</button>
                 </form>
             </div>
@@ -29,10 +48,16 @@ class AddBill extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {
-    categories: state.categories
-  }
+    return {
+        categories: state.categories,
+        lastID: state.lastID
+    }
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addBill: (id, title, amount, category) => { dispatch(addBill(id, title, amount, category))}
+    }
+}
 
-export default connect(mapStateToProps)(AddBill);
+export default connect(mapStateToProps, mapDispatchToProps)(AddBill);
