@@ -6,7 +6,6 @@ export const addCategory = (id, category) => {
     }   
 }
 
-
 export const deleteCategory = (id) => {
     return  {
         type: 'DELETE_CATEGORY',

@@ -6,9 +6,9 @@ const initState = {
     ],
     headers: ['title', 'category', 'amount', 'added', 'actions'],
     categories: [
-        {id: '0', name: 'none'},
-        {id: '1', name: 'food'},
-        {id: '2', name: 'loan'}
+        {id: 0, name: 'none'},
+        {id: 1, name: 'food'},
+        {id: 2, name: 'loan'}
     ],
     lastID: 3,
     catLastID: 2
@@ -50,12 +50,20 @@ const rootReducer = (state = initState, action) => {
                 catLastID: action.id
             }
         case "DELETE_CATEGORY":
-            console.log(action);
             let newCategories = state.categories.filter(category => {
-                return action.id !== category.id
+                return action.id != category.id
+            });
+            let newBillsWithCategory = state.bills.filter(bill => {
+                if(action.id == bill.category) {
+                    bill.category = 0
+                    return bill
+                } else {
+                    return bill
+                }
             });
             return {
                 ...state,
+                bills: newBillsWithCategory,
                 categories: newCategories
             };
     }

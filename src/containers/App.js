@@ -11,13 +11,13 @@ import Categories from '../containers/Categories';
 import { deleteBill } from '../actions/billActions'
 
 class App extends Component {
-  deleteHandler = (id) => {
+  handleDelete = (id) => {
     this.props.deleteBill(id)
   }
   render() {
     return(
       <div className="wrapper">
-        <BillsList bills={this.props.bills} headers={this.props.headers} categories={this.props.categories} deleteHandler={this.deleteHandler}/>
+        <BillsList bills={this.props.bills} headers={this.props.headers} categories={this.props.categories} handleDelete={this.handleDelete}/>
         <AddBill/>
         <Categories/>
       </div>
