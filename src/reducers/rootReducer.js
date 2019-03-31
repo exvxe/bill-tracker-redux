@@ -1,16 +1,17 @@
 const initState = {
     bills: [
-        {id: '1', title: 'chleb', amount: 4.50, category: '1'},
-        {id: '2', title: 'rata', amount: 200, category: '2'},
-        {id: '3', title: 'pączek', amount: 0.3, category: '1'}
+        {id: '1', title: 'chleb', amount: 4.50, category: '1', added: '21.02.2019'},
+        {id: '2', title: 'rata', amount: 200, category: '2', added: '31.12.2018'},
+        {id: '3', title: 'pączek', amount: 0.3, category: '1', added: '03.03.2019'}
     ],
-    headers: ['category', 'title', 'amount', 'actions'],
+    headers: ['title', 'category', 'amount', 'added', 'actions'],
     categories: [
         {id: '0', name: 'none'},
         {id: '1', name: 'food'},
         {id: '2', name: 'loan'}
     ],
-    lastID: 3
+    lastID: 3,
+    catLastID: 2
 }
 
 const rootReducer = (state = initState, action) => {
@@ -24,7 +25,6 @@ const rootReducer = (state = initState, action) => {
                 bills: newBills
             };
         case "ADD_BILL":
-            console.log(action);
             return {
                 ...state,
                 bills: [...state.bills,        
@@ -32,11 +32,32 @@ const rootReducer = (state = initState, action) => {
                         id: action.id,
                         title: action.title,
                         amount: action.amount,
-                        category: action.category
+                        category: action.category,
+                        added: action.added
                     }
                 ],
                 lastID: action.id
             }
+        case "ADD_CATEGORY":
+            return {
+                ...state,
+                categories: [...state.categories,        
+                    {
+                        id: action.id,
+                        name: action.category
+                    }
+                ],
+                catLastID: action.id
+            }
+        case "DELETE_CATEGORY":
+            console.log(action);
+            let newCategories = state.categories.filter(category => {
+                return action.id !== category.id
+            });
+            return {
+                ...state,
+                categories: newCategories
+            };
     }
     return state;
 }

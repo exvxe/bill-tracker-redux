@@ -6,9 +6,10 @@ const BillsList = ({bills, headers, categories, deleteHandler}) => {
     const billsList = bills.map(bill => {
         return (
             <div className="bill" key={bill.id}>
-                <span className="bill-category">{categories.find(x => x.id === bill.category).name}</span>
                 <span className="bill-title">{bill.title}</span>
-                <span className="bill-value">{bill.amount}</span>
+                <span className="bill-category">{categories.find(x => x.id == bill.category).name}</span>
+                <span className="bill-amount">{bill.amount}</span>
+                <span className="bill-added">{bill.added}</span>
                 <button className="bill-delete" onClick={() => {deleteHandler(bill.id)}}>Delete</button>
             </div>
         )

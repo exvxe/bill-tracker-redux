@@ -13,7 +13,8 @@ class AddBill extends Component {
         this.state = {
             title: '',
             amount: '',
-            category: '0'
+            category: '0',
+            addded: ''
         };
     }
     handleChange = (e) => {
@@ -21,20 +22,21 @@ class AddBill extends Component {
         const value = target.value;
         const name = target.id;
         this.setState({
-            [name]: value
+            [name]: value,
+            added: new Date().toLocaleDateString()
         });
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        let {title, amount, category} = this.state
+        let {title, amount, category, added} = this.state
         let id = this.props.lastID + 1
-        this.props.addBill(id, title, amount, category)
+        this.props.addBill(id, title, amount, category, added)
     }
     render() {
         return (
             <div className="addBill">
                 <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="title">Title</label>
+                    <label htmlFor="title">Title:</label>
                     <input type="text" id="title" onChange={this.handleChange}/>
                     <label htmlFor="amount">Value:</label>
                     <input type="number" step="0.01" id="amount" onChange={this.handleChange}/>
@@ -56,7 +58,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addBill: (id, title, amount, category) => { dispatch(addBill(id, title, amount, category))}
+        addBill: (id, title, amount, category, added) => { dispatch(addBill(id, title, amount, category, added))}
     }
 }
 
