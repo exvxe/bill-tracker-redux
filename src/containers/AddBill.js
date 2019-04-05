@@ -12,8 +12,6 @@ class AddBill extends Component {
         super(props);
         this.state = {
             title: '',
-            amount: '',
-            category: '0',
             addded: ''
         };
     }

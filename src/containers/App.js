@@ -7,6 +7,7 @@ import BillsList from '../components/BillsList';
 
 import AddBill from '../containers/AddBill';
 import Categories from '../containers/Categories';
+import BarChart from '../containers/BarChart';
 
 import { deleteBill } from '../actions/billActions'
 
@@ -19,6 +20,10 @@ class App extends Component {
       <div className="wrapper">
         <BillsList bills={this.props.bills} headers={this.props.headers} categories={this.props.categories} handleDelete={this.handleDelete}/>
         <AddBill/>
+        <div className="barCharts">
+          <BarChart bills={this.props.bills} categories={this.props.categories} month={new Date().getMonth()} accent="#CD9900" title="Last month" width="400" height="300"/>
+          <BarChart bills={this.props.bills} categories={this.props.categories} month={new Date().getMonth() + 1} accent="#260094" title="This month" width="400" height="300"/>
+        </div>
         <Categories/>
       </div>
     )
@@ -40,3 +45,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+
