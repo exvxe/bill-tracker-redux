@@ -14,7 +14,7 @@ class BarChart extends Component {
       }
     }
     componentDidUpdate() {
-      d3.select("#" + this.props.id).select('svg').remove();
+      d3.select("#" + this.props.title.toLowerCase().replace(/\s/g, '-')).select('svg').remove();
       this.drawChart();
     }
     drawChart() {
